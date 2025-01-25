@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une nouvelle catégorie{% endblock %}
+
+{% block body %}
+    <h1>Créer une nouvelle catégorie</h1>
+
+    {# Affichage des messages flash #}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {# Formulaire de création de catégorie #}
+    <form action="{{ path('category_create') }}" method="POST">
+        <div class="form-group">
+            <label for="name">Nom de la catégorie</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                class="form-control"
+                required
+            />
+        </div>
+
+        <button type="submit" >Créer</button>
+        <a href="{{ path('category_list') }}">Annuler</a>
+    </form>
+{% endblock %}
