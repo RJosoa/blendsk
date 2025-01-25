@@ -1,5 +1,144 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+  resource:
+    path: ../src/Controller/
+    namespace: App\Controller
+  type: attribute
+
+login:
+  path: /login
+  controller: App\Controller\AuthController::login
+
+logout:
+  path: /logout
+
+register:
+  path: /register
+  controller: App\Controller\UserController::create
+  methods: [GET, POST]
+
+api_login:
+  path: /api/login
+  controller: App\Controller\AuthController::apiLogin
+  methods: ["POST"]
+
+api_user_list:
+  path: /api/users
+  controller: App\Controller\AdminController::userList
+  methods: GET
+
+api_user_by_id:
+  path: /api/users/{id}
+  controller: App\Controller\AdminController::userById
+  methods: GET
+
+api_user_update_roles:
+  path: /api/users/{id}/roles
+  controller: App\Controller\AdminController::updateRoles
+  methods: PUT
+
+comments_list:
+  path: /api/comments
+  controller: App\Controller\AdminController::commentsList
+  methods: ["GET"]
+
+api_comment_delete:
+  path: /api/comments/{id}
+  controller: App\Controller\AdminController::commentDelete
+  methods: DELETE
+
+api_post_list:
+  path: /api/posts
+  controller: App\Controller\AdminController::postList
+  methods: GET
+
+api_post_delete:
+  path: /api/posts/{id}
+  controller: App\Controller\AdminController::postDelete
+  methods: DELETE
+
+api_category_create:
+  path: /api/categories
+  controller: App\Controller\AdminController::categoryCreate
+  methods: POST
+
+api_category_edit:
+  path: /api/categories/{id}
+  controller: App\Controller\AdminController::categoryEdit
+  methods: PUT
+
+api_category_list:
+  path: /api/categories
+  controller: App\Controller\AdminController::categoryList
+  methods: GET
+
+api_category_by_id:
+  path: /api/categories/{id}
+  controller: App\Controller\AdminController::categoryById
+  methods: GET
+
+category_list:
+  path: /category
+  controller: App\Controller\CategoryController::list
+
+category_create:
+  path: admin/category/create
+  controller: App\Controller\CategoryController::create
+  methods: ["GET", "POST"]
+
+category_edit:
+  path: admin/category/{id}/edit
+  controller: App\Controller\CategoryController::edit
+  methods: ["GET", "POST"]
+
+category_delete:
+  path: admin/category/{id}
+  controller: App\Controller\CategoryController::delete
+  methods: POST
+
+post_create:
+  path: /user/post/create
+  controller: App\Controller\PostController::create
+  methods: ["GET", "POST"]
+
+post_show:
+  path: /posts/{id}
+  controller: App\Controller\PostController::show
+
+post_edit:
+  path: /user/post/{id}/edit
+  controller: App\Controller\PostController::edit
+  methods: ["GET", "POST"]
+
+post_delete:
+  path: /user/post/{id}
+  controller: App\Controller\PostController::delete
+  methods: POST
+
+post_filter_by_category:
+  path: /posts/category/{categoryId}
+  controller: App\Controller\PostController::filterByCategory
+
+admin_users_list:
+  path: admin/users
+  controller: App\Controller\AdminController::list
+  methods: [GET]
+
+admin_user_update_roles:
+  path: api/admin/users/{id}
+  controller: App\Controller\AdmiinController::updateRoles
+  methods: PUT
+
+user_details:
+  path: users/{id}
+  controller: App\Controller\UserController::show
+  methods: GET
+
+user_edit:
+  path: users/{id}/edit
+  controller: App\Controller\UserController::edit
+  methods: [GET, PUT]
+
+user_delete:
+  path: api/users/{id}
+  controller: App\Controller\UserController::delete
+  methods: DELETE
