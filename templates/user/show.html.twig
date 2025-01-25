@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %} {% block title %}Détails de l'utilisateur{%
+endblock %} {% block body %}
+<h1>Détails de l'utilisateur</h1>
+
+
+<table class="table">
+  <tr>
+    <th>ID</th>
+    <td>{{ user.id }}</td>
+  </tr>
+  <tr>
+    <th>Nom</th>
+    <td>{{ user.name }}</td>
+  </tr>
+  <tr>
+    <th>Nom d'utilisateur</th>
+    <td>{{ user.username }}</td>
+  </tr>
+  <tr>
+    <th>Email</th>
+    <td>{{ user.email }}</td>
+  </tr>
+  <tr>
+    <th>Rôles</th>
+    <td>{{ user.roles|join(', ') }}</td>
+  </tr>
+  <tr>
+    <th>Avatar</th>
+    <td>
+      {% if user.avatar %}
+      <img
+        src="{{ asset(user.avatar) }}"
+        alt="{{ user.username }}"
+        width="100"
+      />
+      {% else %}
+      <em>Pas d'avatar</em>
+      {% endif %}
+    </td>
+  </tr>
+  <tr>
+    <th>Bio</th>
+    <td>{{ user.bio }}</td>
+  </tr>
+  <tr>
+    <th>CGU acceptées</th>
+    <td>{{ user.termsAccepted ? "Oui" : "Non" }}</td>
+  </tr>
+</table>
+{% endblock %}

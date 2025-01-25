@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register - Create Your Account{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Register to create your account and join our workspace management platform." />
+<meta name="robots" content="noindex,follow" />
+{% endblock %}
+
+{% set show_nav = false %}
+
+{% block body %}
+<section class="min-h-screen min-w-full bg-bk flex flex-col justify-between">
+  <header class="w-full flex p-5" role="banner">
+    <a href="{{ path('home') }}" aria-label="Return to homepage">
+      <img src="{{ asset('img/dark_logo.svg') }}" alt="Company Logo" class="w-10" width="40" height="40" />
+    </a>
+  </header>
+
+  <main class="w-full flex flex-grow p-10" role="main">
+    <h1 class="w-1/4 text-8xl font-bold">Register</h1>
+    <div class="w-3/4 flex justify-center items-center">
+        {{ include("user/_form.html.twig") }}
+    </div>
+  </main>
+
+  <footer class="w-full p-5" role="contentinfo">
+    <p>
+      Do you already have an account? Log in to find your personalised space.
+      <span class="mx-3 underline underline-offset-4 decoration-wavy decoration-2 font-medium">
+        <a href="{{ path('login') }}">Login to my account</a>
+      </span>
+    </p>
+  </footer>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Register Page",
+      "description": "Register page for creating a new account"
+    }
+  </script>
+</section>
+{% endblock %}

@@ -1,0 +1,86 @@
+<section class="form w-96 flex flex-col gap-6">
+  <h3>Sign up to Blendsk</h3>
+
+  {# Google Sign Up Button #}
+  <button
+    class="flex justify-center items-center gap-5 rounded-full p-5 bg-white border border-bk-dark"
+    disabled
+  >
+    <img
+      src="{{ asset('img/google.svg') }}"
+      alt="Google logo"
+      width="24"
+      height="24"
+    />
+    <p>Sign up with Google</p>
+  </button>
+
+  <p class="separator">or sign up with email</p>
+
+  {# Registration Form #}
+  <form
+    method="post"
+    action="{{ path('register') }}"
+    class="flex flex-col gap-6"
+  >
+    <div class="flex gap-3">
+      <label for="name">
+        Name
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          class="w-full p-3 rounded border border-gray-300"
+        />
+      </label>
+
+      <label for="username">
+        Username
+        <input
+          type="text"
+          id="username"
+          name="username"
+          required
+          class="w-full p-3 rounded border border-gray-300"
+        />
+      </label>
+    </div>
+
+    <label for="email">
+      Email
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        class="w-full p-3 rounded border border-gray-300"
+      />
+    </label>
+
+    <label for="password">
+      Password
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+        class="w-full p-3 rounded border border-gray-300"
+      />
+    </label>
+
+    <div class="checkbox flex gap-3 text-sm">
+      <input id="checkbox" name="checkbox" type="checkbox" required />
+      <label for="checkbox">
+        I agree with Blendsk's Terms of Service, Privacy Policy.
+      </label>
+    </div>
+
+    <button
+      type="submit"
+      class="w-full text-center text-white rounded-full overflow-hidden bg-secondary p-5"
+    >
+      Create account
+    </button>
+  </form>
+</section>
