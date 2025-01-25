@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+{{ include ('home/_hero.html.twig') }}
+{% endblock %}
