@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+<section>
+  <div class="flex justify-between py-28 font-bold px-16">
+    <h2 class="text-6xl">Dashboard</h2>
+    <ul class="switch">
+      <li class="font-medium" onclick="showSection('favorites')">Favourites</li>
+      <li class="font-medium" onclick="showSection('likes')">Likes</li>
+    </ul>
+  </div>
+  <section class="px-10">
+    <div id="favorites-section">
+      {{ include("dashboard/_posts_favourites.html.twig") }}
+    </div>
+    <div id="likes-section" style="display: none;">
+      {{ include("dashboard/_posts_likes.html.twig") }}
+    </div>
+  </section>
+</section>
+
+<script>
+  function showSection(section) {
+    document.getElementById('favorites-section').style.display = section === 'favorites' ? 'block' : 'none';
+    document.getElementById('likes-section').style.display = section === 'likes' ? 'block' : 'none';
+  }
+</script>
+{% endblock %}

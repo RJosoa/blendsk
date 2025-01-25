@@ -1,0 +1,29 @@
+{% if likes|length > 0 %}
+<main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+  {% for post in likes %}
+  <article class="flex flex-col justify-between shadow-md overflow-hidden rounded-2xl bg-cover bg-center h-[600px]" style="background-image: url('{{ post.featureImage }}');">
+    <header class="w-full flex justify-between p-2">
+      <p>{{ post.author.name ? post.author.name : "Unknown" }}</p>
+      <p>Liked</p>
+    </header>
+    <section class="px-4 py-2 mt-auto bg-white/70">
+      <p class="text-sm font-semibold">
+        Category: {{ post.category ? post.category.name : "N/A" }}
+      </p>
+    </section>
+    <section class="flex flex-col h-full px-4 pb-4 bg-white/70">
+      <h2 class="text-xl font-bold mb-2">
+        <a href="{{ path('post_show', { id: post.id }) }}" class="text-black no-underline hover:underline">
+          {{ post.title }}
+        </a>
+      </h2>
+      <p class="text-gray-600">
+        {{ post.description|length > 100 ? post.description|slice(0, 100) ~ '...' : post.description }}
+      </p>
+    </section>
+  </article>
+  {% endfor %}
+</main>
+{% else %}
+<p>Vous n'avez pas encore de posts aimés.</p>
+{% endif %}
