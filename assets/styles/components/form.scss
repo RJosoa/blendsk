@@ -1,0 +1,42 @@
+.form {
+  h3 {
+    @apply text-2xl font-semibold !important;
+  }
+
+  img {
+    @apply w-8;
+  }
+
+  .separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  .separator p {
+    margin: 0 10px;
+    color: #333; /* couleur du texte, que tu peux ajuster */
+  }
+
+  .separator::before,
+  .separator::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ccc; /* couleur et style de la ligne */
+  }
+
+  label {
+    @apply font-semibold w-full flex flex-col gap-1;
+  }
+
+  input {
+    @apply w-full px-5 py-4 rounded-xl !important;
+    background: none;
+    border: 1px solid #ccc;
+  }
+
+  input[type="checkbox"] {
+    accent-color: gray;
+    width: 24px !important;
+  }
+}

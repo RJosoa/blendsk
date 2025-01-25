@@ -1,0 +1,16 @@
+svg {
+  @apply w-6;
+}
+
+.actions {
+  i {
+    @apply w-10 h-10 flex justify-center items-center rounded-full;
+  }
+  .hidden-span span {
+    display: none;
+  }
+
+  .hidden-span:hover span {
+    display: inline;
+  }
+}

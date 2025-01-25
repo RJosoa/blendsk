@@ -1,0 +1,16 @@
+nav {
+  .auth {
+    @apply px-5 py-2 rounded-full;
+  }
+  .register {
+    @apply bg-black text-bk-light;
+  }
+
+  .profile {
+    @apply bg-secondary-light text-center rounded-full w-10 h-10;
+
+    a {
+      @apply flex items-center justify-center w-full h-full;
+    }
+  }
+}
