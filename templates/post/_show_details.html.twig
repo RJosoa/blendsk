@@ -1,0 +1,51 @@
+<article class="w-full flex flex-col py-28 gap-10">
+  <!-- En-tête -->
+  <header class="flex flex-col items-center w-full gap-10">
+    <section class="flex flex-col items-center gap-2">
+      <div class="flex items-center gap-5">
+        <p
+          href="{{ path('dashboard') }}"
+          class="w-10 h-10 bg-secondary-light rounded-full flex justify-center items-center"
+        >
+          {{ post.author.username|slice(0, 1)|upper }}
+        </p>
+        <p>{{ post.author.username }}</p>
+      </div>
+
+      <p class="font-noto">Updated on {{ post.updatedAt|date('D. d Y') }}</p>
+    </section>
+    <h1 class="text-6xl font-bold px-16">{{ post.title }}</h1>
+  </header>
+
+  <!-- Contenu du Post -->
+  <main class="w-full flex flex-col items-center gap-10">
+    <section class="description w-10/12 text-center">
+      <p class="font-light text-2xl">{{ post.description }}</p>
+    </section>
+
+    <section class="w-11/12 flex flex-col items-center gap-2">
+      <section class="self-start px-5 py-2 bg-primary-dark rounded-xl">
+        <p>{{ post.category.name }}</p>
+      </section>
+
+      <section
+        class="shadow-md rounded-2xl overflow-hidden h-[600px] w-full flex justify-center items-center"
+      >
+        <img
+          src="{{ post.featureImage }}"
+          alt="{{ post.title }}"
+          class="object-cover w-full h-full"
+        />
+      </section>
+      <p class="self-end font-noto">
+        This article was created by
+        <span class="font-bold">{{ post.author.username }}</span> on
+        <span>{{ post.createdAt|date('D. d Y') }}</span>
+      </p>
+    </section>
+
+    <section class="content">
+      <p>{{ post.content }}</p>
+    </section>
+  </main>
+</article>

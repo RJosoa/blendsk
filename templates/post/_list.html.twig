@@ -1,0 +1,40 @@
+{% if is_granted('ROLE_ADMIN') %}
+<section class="mb-4">
+  <a href="{{ path('category_create') }}"
+    >Créer une nouvelle catégorie</a
+  >
+  <a href="{{ path('category_list') }}"
+    >Afficher les categories</a
+  >
+</section>
+{% endif %}
+
+<section class="mb-4">
+    <h2>Filtrer par catégorie</h2>
+    <form action="{{ path('explorer') }}" method="get">
+        <select name="category">
+            <option value="" {% if selectedCategory is null or selectedCategory is empty %}selected{% endif %}>
+                Toutes les catégories
+            </option>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id == selectedCategory %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+          </form>
+        </select>
+        <button type="submit">Filtrer</button>
+        {% if selectedCategory is not null and selectedCategory is not empty %}
+            <a href="{{ path('explorer') }}">Réinitialiser</a>
+        {% endif %}
+</section>
+
+
+<main
+  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+>
+  {% for post in posts %}
+  {{ include("./post/_card.html.twig", { post: post }) }}
+
+  {% endfor %}
+</main>

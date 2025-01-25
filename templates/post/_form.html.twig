@@ -1,0 +1,28 @@
+{{ form_start(form, {'attr': {'class': 'my-form-class'}}) }}
+{# Personnalisez l'affichage de chaque champ #}
+<div class="my-custom-class">
+    {{ form_row(form.title) }}
+</div>
+
+<div class="my-custom-class">
+    {{ form_row(form.description) }}
+</div>
+
+<div class="my-custom-class">
+    {{ form_row(form.content) }}
+</div>
+
+<div class="my-custom-class">
+    {{ form_row(form.featureImageFile) }}
+</div>
+
+<div class="my-custom-class">
+    {{ form_row(form.featureImage) }}
+</div>
+
+<div class="my-custom-class">
+    {{ form_row(form.category) }}
+</div>
+
+<button type="submit">Créer</button>
+{{ form_end(form) }}

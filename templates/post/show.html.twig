@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %} {% block title %}{{ post.title }}{% endblock %}
+{% block body %}
+<main class="px-20">
+  {{ include("post/_actions.html.twig") }}
+
+  {{ include("post/_show_details.html.twig") }}
+
+  {{ include("post/_comment.html.twig") }}
+</main>
+
+{% endblock %} {% block javascripts %}
+{{ parent() }}
+<script>
+  function toggleLike(postId) {
+    fetch(`/posts/${postId}/like`, { method: "POST" })
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById("likeCount").textContent = data.likesCount;
+        document.getElementById("likeButton").innerHTML = `
+              <button class="action-button" onclick="toggleLike(${postId})">
+                <i class="fa-solid fa-heart fa-lg" style="color: ${
+                  data.isLiked ? "#ff0000" : ""
+                }"></i>
+              </button>`;
+      })
+      .catch((error) => console.error("Error:", error));
+  }
+
+  function toggleFavourite(postId) {
+    fetch(`/posts/${postId}/favourite`, { method: "POST" })
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById("favouriteButton").innerHTML = `
+            <span>${data.isFavourited ? "Unfavorite" : "Favorite"}</span>
+              <button class="action-button" onclick="toggleFavourite(${postId})">
+                <i class="${
+                  data.isFavourited ? "fa-solid" : "fa-regular"
+                } fa-bookmark fa-lg"></i>
+              </button>`;
+      })
+      .catch((error) => console.error("Error:", error));
+  }
+</script>
+{% endblock %}

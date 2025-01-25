@@ -1,0 +1,59 @@
+{# Section des commentaires #}
+<h2>Commentaires</h2>
+
+{% if app.user %}
+    {# Formulaire d'ajout de commentaire #}
+    <section class="comment-form">
+        <h3>Ajouter un commentaire</h3>
+        <form action="{{ path('post_comment_create', { id: post.id }) }}" method="post">
+            <textarea
+                name="content"
+                required
+                placeholder="Écrire votre commentaire"
+            ></textarea>
+            <button type="submit">Comment</button>
+        </form>
+    </section>
+
+    {# Liste des commentaires #}
+    <section class="comments-list">
+        {% if post.comments|length > 0 %}
+            {% for comment in post.comments %}
+                <article class="comment">
+                    <header>
+                        <strong>{{ comment.user.username }}</strong> a commenté :
+                    </header>
+                    <p class="comment-content">{{ comment.content }}</p>
+                    <p class="comment-date">Posté le {{ comment.createdAt|date('d/m/Y H:i') }}</p>
+
+                    <div class="comment-actions">
+                        {# Actions réservées à l'auteur du commentaire ou admin #}
+                        {% if app.user == comment.user or is_granted('ROLE_ADMIN') %}
+                            <form action="{{ path('comment_delete', { id: comment.id }) }}"
+                                  method="post"
+                                  class="inline"
+                                  onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">
+                                <button type="submit" class="text-red-600">Supprimer</button>
+                            </form>
+                        {% endif %}
+
+                        {# Bouton de signalement accessible à tous les utilisateurs connectés #}
+                        <form action="{{ path('comment_report', { id: comment.id }) }}"
+                              method="post"
+                              class="inline">
+                            <button type="submit"
+                                    class="text-red-600"
+                                    onclick="return confirm('Voulez-vous signaler ce commentaire ?')">
+                                Signaler
+                            </button>
+                        </form>
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p>Aucun commentaire pour ce post.</p>
+        {% endif %}
+    </section>
+{% else %}
+    <p>Vous devez être connecté pour commenter.</p>
+{% endif %}

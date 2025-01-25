@@ -1,0 +1,40 @@
+<article
+  class="relative flex flex-col justify-between shadow-md rounded-2xl overflow-hidden bg-cover bg-center h-[600px]"
+  style="background-image: url('{{ post.featureImage }}');"
+>
+  <div class="article-overlay"></div>
+  <header class="relative w-full flex justify-between p-2">
+    {{ include("./post/_author.html.twig", { post: post }) }}
+    <div class="absolute -top-1 -right-1">
+        {% if post.id in favouritedPosts %}
+        <img
+          src="{{ asset('img/icons/favourite_full.svg') }}"
+          alt="Favourite"
+          class="w-12 h-12"
+        />
+        {% else %}
+        <img
+          src="{{ asset('img/icons/favourite_empty.svg') }}"
+          alt="Favourite"
+          class="w-12 h-12"
+        />
+        {% endif %}
+      </div>
+  </header>
+  <section class="relative flex flex-col h-full px-4 py-52 pb-4 gap-5">
+    <p class=" text-sm font-medium px-4 py-1 bg-white/70 rounded-full w-max backdrop-blur-sm">
+     {{ post.category ? post.category.name : "N/A" }}
+    </p>
+    <h2 class="text-3xl font-black mb-2 text-white">
+      <a
+        href="{{ path('post_show', { id: post.id }) }}"
+        class="no-underline hover:underline "
+      >
+        {{ post.title }}
+      </a>
+    </h2>
+    <p class="text-gray-600 mt-5">
+      {{ post.description|length > 100 ? post.description|slice(0, 100) ~ '...' : post.description }}
+    </p>
+  </section>
+</article>
