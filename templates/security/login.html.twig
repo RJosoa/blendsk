@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %} {% block title %}Login - Secure Access to Your
+Account{% endblock %} {% block meta %}
+<meta
+  name="description"
+  content="Login to access your account securely. Join our workspace management platform."
+/>
+<meta name="robots" content="noindex,follow" />
+
+{% endblock %} {% set show_nav = false %} {% block body %}
+<section class="min-h-screen min-w-full bg-bk flex flex-col justify-between">
+  <header class="w-full flex p-5" role="banner">
+    <a href="{{ path('home') }}" aria-label="Return to homepage">
+      <img
+        src="{{ asset('img/dark_logo.svg') }}"
+        alt="Company Logo"
+        class="w-10"
+        width="40"
+        height="40"
+      />
+    </a>
+  </header>
+
+  <main class="w-full flex flex-grow p-10" role="main">
+    <h1 class="w-1/4 text-8xl font-bold">Sign in</h1>
+    <div class="w-3/4 flex justify-center items-center">
+      {{ include("security/_form.html.twig") }}
+    </div>
+  </main>
+
+  <footer class="w-full p-5" role="contentinfo">
+    <p>
+      No account yet? Join us to transform your workspace.
+      <span
+        class="mx-3 underline underline-offset-4 decoration-wavy decoration-2 font-medium"
+      >
+        <a href="{{ path('register') }}">Create your account</a>
+      </span>
+    </p>
+  </footer>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Login Page",
+      "description": "Secure login page for account access"
+    }
+  </script>
+</section>
+{% endblock %}

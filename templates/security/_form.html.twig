@@ -1,0 +1,56 @@
+<section class="form w-96 flex flex-col gap-6">
+  <h3>Login to Blendsk</h3>
+
+  {# Google Sign In Button #}
+  <button
+    class="flex justify-center items-center gap-5 rounded-full p-5 bg-white border border-bk-dark"
+    disabled
+  >
+    <img
+      src="{{ asset('img/google.svg') }}"
+      alt="Google logo"
+      width="24"
+      height="24"
+    />
+    <p>Sign in with Google</p>
+  </button>
+
+  <div class="separator">
+    <p>or sign in with email</p>
+  </div>
+
+  {# Login Form #}
+  <form method="post" action="{{ path('login') }}" class="flex flex-col gap-6">
+
+    <label for="email">
+      Email
+      <input
+        type="email"
+        id="email"
+        name="_username"
+        value="{{ last_username }}"
+        required
+        autofocus
+        class="w-full p-3 rounded border border-gray-300"
+      />
+    </label>
+
+    <label for="password">
+      Password
+      <input
+        type="password"
+        id="password"
+        name="_password"
+        required
+        class="w-full p-3 rounded border border-gray-300"
+      />
+    </label>
+
+    <button
+      type="submit"
+      class="w-full text-center text-white rounded-full overflow-hidden bg-secondary p-5"
+    >
+      Sign In
+    </button>
+  </form>
+</section>
