@@ -1,0 +1,12 @@
+<ul>
+    {% for comment in comments %}
+        <li>
+            {{ comment.content }}
+            {% if comment.report %}
+                <span>(Signalé)</span>
+            {% endif %}
+        </li>
+    {% else %}
+        <li>Aucun commentaire trouvé.</li>
+    {% endfor %}
+    </ul>

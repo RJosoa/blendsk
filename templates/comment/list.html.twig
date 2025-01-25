@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %} {% block title %}Liste des commentaires{%
+endblock %} {% block body %}
+<h1>Liste des commentaires</h1>
+
+{% include 'comment/_list.html.twig' with {'comments': comments} %} {% endblock
+%}

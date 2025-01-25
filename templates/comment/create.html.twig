@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un commentaire{% endblock %}
+
+{% block body %}
+    <h1>Créer un commentaire</h1>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <form method="post">
+        <div>
+            <label for="content">Contenu :</label>
+            <textarea id="content" name="content" required></textarea>
+        </div>
+        <div>
+            <label for="report">
+                <input type="checkbox" id="report" name="report" value="1"> Signaler ce commentaire
+            </label>
+        </div>
+        <button type="submit">Ajouter le commentaire</button>
+    </form>
+
+    <h2>Liste des commentaires existants</h2>
+    {% include 'comment/_list.html.twig' with {'comments': comments} %}
+
+    <a href="{{ path('app_comment') }}">Retour à la liste complète</a>
+{% endblock %}

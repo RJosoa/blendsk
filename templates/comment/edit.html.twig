@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %} {% block title %}Modifier un commentaire{%
+endblock %} {% block body %}
+<h1>Modifier le commentaire</h1>
+
+<form method="post">
+  <div>
+    <textarea name="content" required>{{ comment.content }}</textarea>
+  </div>
+  <button type="submit">Enregistrer</button>
+</form>
+
+<a href="{{ path('post_show', { id: comment.post.id }) }}">Retour</a>
+{% endblock %}
