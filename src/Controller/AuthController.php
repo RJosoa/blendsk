@@ -45,7 +45,7 @@ class AuthController extends AbstractController
         $user = $userRepository->findOneBy(['email' => $email]);
 
         if (!$user || !$this->passwordHasher->isPasswordValid($user, $password)) {
-            return $this->json(['message' => 'Invalid credentials'], Response::HTTP_UNAUTHORIZED);
+            return $this->json(['message' => 'Invalid credentials']);
         }
 
         $token = $jwtManager->create($user);
