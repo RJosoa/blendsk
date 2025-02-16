@@ -17,6 +17,10 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class AdminController extends AbstractController
 {
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function userlist(UserRepository $userRepository, SerializerInterface $serializer): JsonResponse
     {
         $usersList = $userRepository->findAll();
@@ -25,6 +29,9 @@ class AdminController extends AbstractController
         return new JsonResponse($jsonComments, 200, [], true);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function userById(int $id, UserRepository $userRepository, SerializerInterface $serializer): JsonResponse
     {
         $user = $userRepository->find($id);
@@ -32,6 +39,9 @@ class AdminController extends AbstractController
         return new JsonResponse($jsonUser, 200, [], true);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function updateRoles(
         int $id,
         Request $request,
@@ -41,7 +51,7 @@ class AdminController extends AbstractController
         $user = $userRepository->find($id);
 
         if (!$user) {
-            return new JsonResponse(['error' => 'User not found'], JsonResponse::HTTP_NOT_FOUND);
+            return new JsonResponse(['error' => 'User not found']);
         }
 
         $data = json_decode($request->getContent(), true);
@@ -49,19 +59,17 @@ class AdminController extends AbstractController
         $roles = $data['roles'];
 
         $user->setRoles($roles);
+        $em->persist($user);
         $em->flush();
 
-        // Retourner la réponse
         return new JsonResponse([
             'message' => 'User role updated',
-            'user' => [
-                'id' => $user->getId(),
-                'username' => $user->getUsername(),
-                'roles' => $user->getRoles(),
-            ],
-        ], JsonResponse::HTTP_OK);
+        ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function commentsList(CommentRepository $commentRepository, SerializerInterface $serializer): JsonResponse
     {
         // $commentsList = $commentRepository->findAll();
@@ -76,7 +84,9 @@ class AdminController extends AbstractController
         return new JsonResponse($jsonComments, 200, [], true);
     }
 
-    // #[Route('/api/comments/{id}', name: 'api_comment_delete', methods: ['DELETE'])]
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function commentDelete(int $id, CommentRepository $commentRepository, EntityManagerInterface $em): JsonResponse
     {
         $comment = $commentRepository->find($id);
@@ -88,6 +98,9 @@ class AdminController extends AbstractController
         return new JsonResponse(['message' => 'Comment deleted'], JsonResponse::HTTP_OK);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function postList(PostRepository $postRepository, SerializerInterface $serializer)
     {
         $postsList = $postRepository->findBy(['report' => true]);
@@ -98,6 +111,9 @@ class AdminController extends AbstractController
         return new JsonResponse($jsonPosts, 200, [], true);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function postDelete(int $id, PostRepository $postRepository, EntityManagerInterface $em): JsonResponse
     {
         $post = $postRepository->find($id);
@@ -109,6 +125,9 @@ class AdminController extends AbstractController
         return new JsonResponse(['message' => 'Post deleted'], JsonResponse::HTTP_OK);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function categoryCreate(Request $request, CategoryRepository $categoryRepository, EntityManagerInterface $em)
     {
         $data = json_decode($request->getContent(), true);
@@ -127,7 +146,9 @@ class AdminController extends AbstractController
         return $this->json(['message' => 'Category created successfully'], Response::HTTP_CREATED);
     }
 
-
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function categoryEdit(Request $request, EntityManagerInterface $em, CategoryRepository $categoryRepository, int $id): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -158,6 +179,9 @@ class AdminController extends AbstractController
         ], Response::HTTP_OK);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function categoryList(CategoryRepository $categoryRepository, SerializerInterface $serializer): JsonResponse
     {
         $categories = $categoryRepository->findAll();
@@ -167,6 +191,9 @@ class AdminController extends AbstractController
         return new JsonResponse($jsonCategory, 200, [], true);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function categoryById(int $id, CategoryRepository $categoryRepository, SerializerInterface $serializer)
     {
         $category = $categoryRepository->find($id);
