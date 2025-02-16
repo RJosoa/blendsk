@@ -13,7 +13,6 @@ use App\Repository\CategoryRepository;
 use App\Repository\FavouriteRepository;
 use App\Repository\LikeRepository;
 use App\Services\CloudinaryService;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
