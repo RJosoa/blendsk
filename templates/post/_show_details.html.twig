@@ -1,5 +1,4 @@
 <article class="w-full flex flex-col py-28 gap-10">
-  <!-- En-tête -->
   <header class="flex flex-col items-center w-full gap-10">
     <section class="flex flex-col items-center gap-2">
       <div class="flex items-center gap-5">
@@ -12,12 +11,11 @@
         <p>{{ post.author.username }}</p>
       </div>
 
-      <p class="font-noto">Updated on {{ post.updatedAt|date('D. d Y') }}</p>
+      <p class="font-noto">Updated on {{ post.updatedAt|date('D d M Y') }}</p>
     </section>
     <h1 class="text-6xl font-bold px-16">{{ post.title }}</h1>
   </header>
 
-  <!-- Contenu du Post -->
   <main class="w-full flex flex-col items-center gap-10">
     <section class="description w-10/12 text-center">
       <p class="font-light text-2xl">{{ post.description }}</p>
@@ -40,7 +38,7 @@
       <p class="self-end font-noto">
         This article was created by
         <span class="font-bold">{{ post.author.username }}</span> on
-        <span>{{ post.createdAt|date('D. d Y') }}</span>
+        <span>{{ post.createdAt|date('D d M Y') }}</span>
       </p>
     </section>
 
