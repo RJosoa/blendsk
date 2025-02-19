@@ -77,10 +77,10 @@ services:
       SONARQUBE_JDBC_USERNAME: ${SONARQUBE_JDBC_USERNAME:-sonar}
       SONARQUBE_JDBC_PASSWORD: ${SONARQUBE_JDBC_PASSWORD:-sonar}
     depends_on:
-      - sonarqube_db
+      sonarqube_db:
+        condition: service_healthy
     networks:
       - ci_cd_network
-
 
   sonarqube_db:
     image: postgres:latest
