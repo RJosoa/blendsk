@@ -1,0 +1,10 @@
+.git                # Ignorer le dossier Git
+node_modules        # Ignorer les dépendances front-end déjà gérées par npm
+tests/              # Les tests seront exécutés dans Jenkins
+var/*               # Le répertoire var contient des fichiers temporaires
+.env                # Ne pas inclure les variables d'environnement sensibles
+.idea               # Configurations IDE
+.vscode             # Configurations IDE
+.DS_Store           # Fichiers spécifiques à macOS
+Dockerfile          # Ne pas inclure le Dockerfile dans l'image finale
+.dockerignore       # Ne pas inclure le fichier .dockerignore dans l'image finale
