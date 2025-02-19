@@ -6,5 +6,5 @@ var/*               # Le répertoire var contient des fichiers temporaires
 .idea               # Configurations IDE
 .vscode             # Configurations IDE
 .DS_Store           # Fichiers spécifiques à macOS
-Dockerfile          # Ne pas inclure le Dockerfile dans l'image finale
+dockerfile          # Ne pas inclure le Dockerfile dans l'image finale
 .dockerignore       # Ne pas inclure le fichier .dockerignore dans l'image finale
