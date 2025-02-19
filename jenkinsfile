@@ -1,10 +1,50 @@
 pipeline {
     agent any
 
-    stages {
-
+    environment {
+        DOCKER_CREDENTIALS_ID = 'docker-credentials'
+        SONAR_CREDENTIALS_ID = 'sonar-token'
     }
-    post {
 
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/RJosoa/blendsk.git'
+            }
+        }
+
+    stage('Install Dependencies') {
+        steps {
+            sh 'docker-compose run --rm app composer install --no-dev --optimize-autoloader'
+        }
+    }
+
+        stage('Build') {
+            steps {
+                sh 'docker-compose build'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh './vendor/bin/phpunit'
+                withCredentials([string(credentialsId: "${SONAR_CREDENTIALS_ID}", variable: 'SONAR_TOKEN')]) {
+                    sh 'sonar-scanner'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'docker-compose down'
+                sh 'docker-compose up -d'
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
     }
 }
