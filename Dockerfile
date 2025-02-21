@@ -1,26 +1,24 @@
-FROM php:8.2-fpm
+FROM php:8.2-apache
 
-# Installation des dépendances système et des extensions PHP
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    libicu-dev \
     libonig-dev \
     libxml2-dev \
-    && docker-php-ext-install pdo_mysql intl opcache
+    zip \
+    unzip \
+    && docker-php-ext-install pdo_mysql
 
-# Installer Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN a2enmod rewrite
 
-# Définir le répertoire de travail
-WORKDIR /var/www
+WORKDIR /var/www/html
 
-# Copier le code de l'application dans le container
+COPY composer.json composer.lock ./
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && composer install --no-scripts --no-autoloader
+
 COPY . .
 
-# Installer les dépendances PHP
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN composer dump-autoload --optimize
 
-EXPOSE 9000
+EXPOSE 80
 
-CMD ["php-fpm"]
+CMD ["apache2-foreground"]

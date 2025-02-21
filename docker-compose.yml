@@ -4,27 +4,26 @@ services:
   app:
     build: .
     container_name: blendsk_app
-    volumes:
-      - .:/var/www
     ports:
-      - "9000:9000"
+      - "80:80"       # Le conteneur écoute sur le port 80 et est mappé sur le port 80 de l’hôte
+    volumes:
+      - .:/var/www/html   # Synchronisation du code source pour faciliter le développement
     depends_on:
-      - db
-    environment:
-      DATABASE_URL: "mysql://root:root@db:3306/blendsk"
+      - db          # Démarre la base de données avant l’application
 
   db:
     image: mysql:8.0
     container_name: blendsk_db
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: blendsk
       MYSQL_USER: root
       MYSQL_PASSWORD: root
     ports:
-      - "3306:3306"
+      - "3306:3306"  # Port MySQL, utile pour des tests en local (attention en production)
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data:/var/lib/mysql   # Persistance des données de la base
 
 volumes:
   db_data:
