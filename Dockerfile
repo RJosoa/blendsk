@@ -1,32 +1,26 @@
-# Étape 1 : Image de base avec PHP et Apache
-FROM php:8.2-apache
+FROM php:8.2-fpm
 
-# Étape 2 : Installation des extensions PHP nécessaires
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libzip-dev unzip git libicu-dev libonig-dev libpq-dev \
-    && docker-php-ext-install zip intl pdo pdo_mysql opcache \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+# Installation des dépendances système et des extensions PHP
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libicu-dev \
+    libonig-dev \
+    libxml2-dev \
+    && docker-php-ext-install pdo_mysql intl opcache
 
-# Étape 3 : Activation du module Apache rewrite
-RUN a2enmod rewrite
+# Installer Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Étape 4 : Installation de Composer depuis une image multi-stage
-COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
-
-# Étape 5 : Définition du répertoire de travail
+# Définir le répertoire de travail
 WORKDIR /var/www
 
-# Étape 6 : Copie du projet Symfony dans le conteneur (avec .dockerignore)
+# Copier le code de l'application dans le container
 COPY . .
 
-# Étape 7 : Installation des dépendances Symfony en mode production
-RUN composer install --no-dev --optimize-autoloader
+# Installer les dépendances PHP
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Étape 8 : Attribution des droits pour Apache et Symfony
-RUN chown -R www-data:www-data /var/www/html/var /var/www/html/public
+EXPOSE 9000
 
-# Étape 9 : Exposer le port HTTP par défaut d'Apache
-EXPOSE 80
-
-# Étape 10 : Lancer Apache en mode premier plan
-CMD ["apache2-foreground"]
+CMD ["php-fpm"]
