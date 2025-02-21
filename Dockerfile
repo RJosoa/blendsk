@@ -9,12 +9,10 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod rewrite
 
-# Copier l'intégralité du projet dans /var/www
 WORKDIR /var/www
 
 COPY . .
 
-# Déplacer le contenu du dossier public dans le DocumentRoot d'Apache
 RUN cp -R public /var/www/html && \
     chown -R www-data:www-data /var/www/html && \
     chmod -R 777 /var/www/html
