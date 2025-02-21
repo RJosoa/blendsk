@@ -15,9 +15,9 @@ WORKDIR /var/www
 COPY . .
 
 # Déplacer le contenu du dossier public dans le DocumentRoot d'Apache
-RUN cp -R public /var/www && \
-    chown -R www-data:www-data /var/www && \
-    chmod -R 775 /var/www
+RUN cp -R public /var/www/html && \
+    chown -R www-data:www-data /var/www/html && \
+    chmod -R 777 /var/www/html
 
 EXPOSE 80
 
