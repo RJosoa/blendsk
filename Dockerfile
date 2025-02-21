@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod rewrite
 
-# Copier l'intégralité du projet dans /var/www (vous pouvez adapter selon votre structure)
+# Copier l'intégralité du projet dans /var/www
 WORKDIR /var/www
 
 COPY . .
