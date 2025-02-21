@@ -16,7 +16,8 @@ COPY . .
 
 # Déplacer le contenu du dossier public dans le DocumentRoot d'Apache
 RUN cp -R public /var/www/html && \
-    chown -R www-data:www-data /var/www/html
+    chown -R www-data:www-data /var/www/html && \
+    chmod -R 775 /var/www/html
 
 EXPOSE 80
 
