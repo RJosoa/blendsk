@@ -9,15 +9,14 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod rewrite
 
-WORKDIR /var/www/html
-
-COPY composer.json composer.lock ./
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer install --no-scripts --no-autoloader
+# Copier l'intégralité du projet dans /var/www (vous pouvez adapter selon votre structure)
+WORKDIR /var/www
 
 COPY . .
 
-RUN composer dump-autoload --optimize
+# Déplacer le contenu du dossier public dans le DocumentRoot d'Apache
+RUN cp -R public /var/www/html && \
+    chown -R www-data:www-data /var/www/html
 
 EXPOSE 80
 
