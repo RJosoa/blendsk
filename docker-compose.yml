@@ -7,9 +7,9 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./public:/var/www/html
+      - .:/var/www/html
     depends_on:
-      - database
+      - db
 
   db:
     image: mysql:8.0
