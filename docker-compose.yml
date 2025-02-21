@@ -6,8 +6,6 @@ services:
     container_name: blendsk_app
     ports:
       - "80:80"
-    volumes:
-      - .:/var/www/html
     depends_on:
       - db
 
