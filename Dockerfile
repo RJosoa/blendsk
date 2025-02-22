@@ -23,10 +23,11 @@ WORKDIR /var/www/html
 # Copie des fichiers du projet
 COPY . .
 
-# Configuration des permissions
-RUN chown -R www-data:www-data . \
-    && chmod -R 755 . \
-    && chmod -R 775 var
+# Création du dossier var et configuration des permissions
+RUN mkdir -p var && \
+    chown -R www-data:www-data . && \
+    chmod -R 755 . && \
+    chmod -R 775 var
 
 EXPOSE 80
 
