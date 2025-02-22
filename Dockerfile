@@ -1,7 +1,5 @@
 FROM php:8.2-apache
 
-USER root
-
 # Installation des dépendances système et extensions PHP
 RUN apt-get update && apt-get install -y \
     libonig-dev \
@@ -20,7 +18,7 @@ RUN a2enmod rewrite
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Configuration du répertoire de travail
-WORKDIR /var/www/html
+WORKDIR /var/www
 
 # Copier les fichiers du projet
 COPY . .
