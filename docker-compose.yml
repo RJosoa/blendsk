@@ -6,22 +6,34 @@ services:
     container_name: blendsk_app
     ports:
       - "80:80"
+    volumes:
+      - .:/var/www/html
+      - ./var:/var/www/html/var
+    environment:
+      - APP_ENV=dev
+      - DATABASE_URL=mysql://root:root@database:3306/blendsk
     depends_on:
-      - db
+      database:
+        condition: service_healthy
 
-  db:
+  database:
     image: mysql:8.0
     container_name: blendsk_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: blendsk
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-blendsk}
+      MYSQL_USER: ${MYSQL_USER:-root}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-root}
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   db_data:
