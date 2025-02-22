@@ -20,6 +20,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Configuration du répertoire de travail
 WORKDIR /var/www/html
 
+# Copy composer files first
+COPY composer.json composer.lock ./
+
+# Install dependencies
+RUN composer install --no-scripts --no-autoloader
+
 # Configure Apache document root
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
@@ -28,6 +34,9 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 
 # Copie des fichiers du projet
 COPY . .
+
+# Generate optimized autoloader
+RUN composer dump-autoload --optimize
 
 # Set proper permissions
 RUN mkdir -p var && \
