@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-# Installation des dépendances système et PHP extensions
+# Installation des dépendances système et extensions PHP
 RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
@@ -14,26 +14,27 @@ RUN apt-get update && apt-get install -y \
 # Activation du module rewrite d'Apache
 RUN a2enmod rewrite
 
-# Installation de Composer
+# Optionnel : désactiver puis réactiver le site par défaut
+# RUN a2dissite 000-default.conf && a2ensite 000-default.conf
+
+# Installation de Composer depuis l'image officielle
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Configuration du répertoire de travail
+# Définir le répertoire de travail
 WORKDIR /var/www/html
 
-# Copie des fichiers du projet
+# Copier l'ensemble des fichiers du projet
 COPY . .
 
-# Install dependencies and generate autoloader
-RUN composer install \
-    && composer dump-autoload --optimize
+# Installation des dépendances PHP et génération de l'autoloader
+RUN composer install && composer dump-autoload --optimize
 
-# Configure Apache document root
+# Configuration de la racine des documents Apache (pointant vers le dossier public)
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
     && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Set proper permissions
+# Définir les permissions sur le dossier et créer le répertoire var
 RUN mkdir -p var && \
     chown -R www-data:www-data . && \
     chmod -R 755 . && \
