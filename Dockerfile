@@ -26,7 +26,7 @@ COPY . .
 # Configuration des permissions
 RUN chown -R www-data:www-data . \
     && chmod -R 755 . \
-    && chmod -R 777 var
+    && chmod -R 775 var
 
 EXPOSE 80
 
