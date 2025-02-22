@@ -20,6 +20,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Configuration du répertoire de travail
 WORKDIR /var/www
 
+RUN composer install --prefer-dist --no-dev --optimize-autoloader
+
 # Copier les fichiers du projet
 COPY . .
 
