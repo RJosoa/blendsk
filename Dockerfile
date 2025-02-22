@@ -14,14 +14,15 @@ RUN apt-get update && apt-get install -y \
 # Activation du module rewrite d'Apache
 RUN a2enmod rewrite
 
-# Installation de Composer
+# Installation de Composer depuis l'image officielle
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Définir le répertoire de travail
 WORKDIR /var/www
 
-# Copier les fichiers composer.json et composer.lock avant d'exécuter Composer
+# Copier les fichiers de dépendances et le dossier bin pour que bin/console soit présent
 COPY composer.json composer.lock ./
+COPY bin/ bin/
 
 # Installer les dépendances PHP en mode production
 RUN composer install --prefer-dist --no-dev --optimize-autoloader
@@ -37,6 +38,10 @@ RUN a2ensite 000-custom.conf && a2dissite 000-default.conf
 RUN chown -R www-data:www-data . && \
     chmod -R 755 . && \
     chmod -R 775 var
+
+# Configuration pour la production
+ENV APP_ENV=prod
+ENV APP_DEBUG=0
 
 EXPOSE 80
 
