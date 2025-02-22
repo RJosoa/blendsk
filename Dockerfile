@@ -24,7 +24,7 @@ WORKDIR /var/www/html
 COPY composer.json composer.lock ./
 
 # Install dependencies
-RUN composer install --no-scripts --no-autoloader
+RUN composer install --no-scripts --no-autoloader --prefer-dist --no-dev --optimize-autoloader
 
 # Configure Apache document root
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
