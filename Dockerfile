@@ -22,23 +22,12 @@ WORKDIR /var/www
 
 # Copier les fichiers de configuration
 COPY composer.json composer.lock ./
-COPY .env .env
-COPY .env.prod .env.local
 
 # Installer les dépendances en mode production sans les scripts
 RUN composer install --prefer-dist --no-dev --optimize-autoloader --no-scripts
 
 # Copier le reste des fichiers du projet
 COPY . .
-
-# Configuration pour la production
-ENV APP_ENV=prod
-ENV APP_DEBUG=0
-
-# Finaliser l'installation
-RUN composer dump-autoload --optimize && \
-    bin/console cache:clear --no-warmup && \
-    bin/console cache:warmup
 
 # Copier le fichier de configuration Apache et l'activer
 COPY docker/000-custom.conf /etc/apache2/sites-available/000-custom.conf
