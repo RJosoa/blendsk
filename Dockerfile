@@ -34,9 +34,7 @@ COPY docker/000-custom.conf /etc/apache2/sites-available/000-custom.conf
 RUN a2ensite 000-custom.conf && a2dissite 000-default.conf
 
 # Définir les permissions appropriées
-RUN chown -R www-data:www-data . && \
-    chmod -R 755 . && \
-    chmod -R 775 var
+RUN chmod -R 777 /var/www/
 
 EXPOSE 80
 
